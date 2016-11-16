@@ -7,6 +7,7 @@ preview:  When I was writing an app of finding world time, I find a really inter
 tags: #可选
     - Objective-c
     - iOS
+type: post
 
 ---
 
