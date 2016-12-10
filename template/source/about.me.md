@@ -1,11 +1,11 @@
 type: page
-title: "关于作者"
+title: "About Me"
 author: me
 
 ---
 
-## 纸小墨
+## bluepi0j
 
-构建只为纯粹书写的博客。
+UofT Computer Science Student, iOS developer
 
-[http://www.chole.io/](http://www.chole.io/)
+[http://bluepi0j.com/](http://bluepi0j.com/)

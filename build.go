@@ -75,7 +75,6 @@ func Build() {
 	startTime := time.Now()
 	var articles = make(Collections, 0)
 	var pages = make(Collections, 0)
-	var cnPages = make(Collections, 0)
 	var tagMap = make(map[string]Collections)
 	var archiveMap = make(map[string]Collections)
 	// Parse config
@@ -133,12 +132,6 @@ func Build() {
 				pages = append(pages, *article)
 				return nil
 			}
-
-			if article.Type == "cn" {
-				cnPages = append(cnPages, *article)
-				return nil
-			}
-
 			articles = append(articles, *article)
 			// Get tags info
 			for _, tag := range article.Tags {
@@ -166,7 +159,6 @@ func Build() {
 	if len(articles) == 0 {
 		Fatal("Must be have at least one article")
 	}
-
 	// Sort by date
 	sort.Sort(articles)
 	// Generate RSS page
@@ -181,9 +173,6 @@ func Build() {
 	// Render pages
 	wg.Add(1)
 	go RenderArticles(articleTpl, pages)
-	// Render cnPages
-	wg.Add(1)
-	go RenderArticles(articleTpl, cnPages)
 	// Generate article list pages
 	wg.Add(1)
 	go RenderArticleList("", articles, "")
@@ -192,13 +181,6 @@ func Build() {
 		wg.Add(1)
 		go RenderArticleList(filepath.Join("tag", tagName), articles, tagName)
 	}
-
-	//Generate hide cn article page by tag cn
-	if len(cnPages) != 0 {
-		wg.Add(1)
-		go RenderArticleList(filepath.Join("cn", ""), cnPages, "")
-	}
-
 	// Generate archive page
 	archives := make(Collections, 0)
 	for year, articleInfos := range archiveMap {
